@@ -1,6 +1,7 @@
-# Welcome to Remix!
+# Remix MDX Blog
 
 - [Remix Docs](https://remix.run/docs)
+  - [MDX](https://remix.run/docs/en/v1/guides/mdx#mdx)
 
 ## Development
 
