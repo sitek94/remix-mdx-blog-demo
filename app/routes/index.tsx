@@ -1,32 +1,44 @@
+import { json } from '@remix-run/node'
+import { Link, useLoaderData } from '@remix-run/react'
+
+import * as postA from './posts/a.md'
+import * as postB from './posts/b.md'
+
+type Post = {
+  slug: string
+  title: string
+  description: string
+}
+
+function postFromModule(mod): Post {
+  return {
+    slug: mod.filename.replace(/\.mdx?$/, ''),
+    ...mod.attributes.meta,
+  }
+}
+
+export async function loader() {
+  // Return metadata about each of the posts for display on the index page.
+  // Referencing the posts here instead of in the Index component down below
+  // lets us avoid bundling the actual posts themselves in the bundle for the
+  // index page.
+  return json([postFromModule(postA), postFromModule(postB)])
+}
+
 export default function Index() {
+  const posts = useLoaderData<Post[]>()
+
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <h1>Welcome to Remix</h1>
+    <div style={{ fontFamily: 'system-ui, sans-serif', lineHeight: '1.4' }}>
+      <h1>Blog</h1>
       <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
+        {posts.map(post => (
+          <li key={post.slug}>
+            <Link to={post.slug}>{post.title}</Link>
+            {post.description ? <p>{post.description}</p> : null}
+          </li>
+        ))}
       </ul>
     </div>
-  );
+  )
 }
