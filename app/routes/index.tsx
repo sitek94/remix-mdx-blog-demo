@@ -29,16 +29,16 @@ export default function Index() {
   const posts = useLoaderData<Post[]>()
 
   return (
-    <div style={{ fontFamily: 'system-ui, sans-serif', lineHeight: '1.4' }}>
+    <main>
       <h1>Blog</h1>
       <ul>
         {posts.map(post => (
           <li key={post.slug}>
-            <Link to={post.slug}>{post.title}</Link>
+            <Link to={`posts/${post.slug}`}>{post.title}</Link>
             {post.description ? <p>{post.description}</p> : null}
           </li>
         ))}
       </ul>
-    </div>
+    </main>
   )
 }

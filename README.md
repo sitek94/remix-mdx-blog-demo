@@ -2,6 +2,9 @@
 
 - [Remix Docs](https://remix.run/docs)
   - [MDX](https://remix.run/docs/en/v1/guides/mdx#mdx)
+  - [Loading data](https://remix.run/docs/en/v1/tutorials/blog#loading-data)
+- [mdx-bundler](https://github.com/kentcdodds/mdx-bundler)
+  - had to use `mdx-bundler` within `.server.ts` files to avoid errors
 
 ## Development
 
