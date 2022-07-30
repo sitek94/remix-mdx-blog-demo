@@ -74,18 +74,10 @@ export async function getBlogMdxPage(slug: string) {
       return options
     },
     esbuildOptions: options => {
-      // Set the `outdir` to a public location for this bundle.
-      options.outdir = `${process.cwd()}/public/images/blog`
       options.loader = {
         ...options.loader,
-        // Tell esbuild to use the `file` loader for pngs
-        '.png': 'file',
+        '.png': 'dataurl',
       }
-      // Set the public path to /img/about
-      options.publicPath = '/images/blog'
-
-      // Set write to true so that esbuild will output the files.
-      options.write = true
 
       return options
     },
