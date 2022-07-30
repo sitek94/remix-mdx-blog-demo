@@ -10,9 +10,8 @@ export const loader: LoaderFunction = async ({ params }) => {
   return json({ slug: params.slug, ...(await getPost()) })
 }
 
-export default function PostSlug() {
+export default function BlogSlug() {
   const { slug, code, frontmatter } = useLoaderData()
-
   return (
     <main>
       <h1>Some Post: {slug}</h1>
@@ -25,6 +24,8 @@ export default function PostSlug() {
 function Post({ code, frontmatter }) {
   // it's generally a good idea to memoize this function call to
   // avoid re-creating the component every render.
+
+  console.log(code, frontmatter)
 
   const Component = React.useMemo(() => getMDXComponent(code), [code])
   return (
