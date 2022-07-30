@@ -1,9 +1,6 @@
 import { json } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
 
-import * as postA from './posts/a.md'
-import * as postB from './posts/b.md'
-
 type Post = {
   slug: string
   title: string
@@ -22,7 +19,7 @@ export async function loader() {
   // Referencing the posts here instead of in the Index component down below
   // lets us avoid bundling the actual posts themselves in the bundle for the
   // index page.
-  return json([postFromModule(postA), postFromModule(postB)])
+  return json([])
 }
 
 export default function Index() {

@@ -1,8 +1,8 @@
 import { bundleMDX } from 'mdx-bundler'
 
-export async function getPost() {
+export async function getPost(slug: string) {
   const result = await bundleMDX({
-    file: './content/blog/a.md',
+    file: `./content/blog/${slug}.mdx`,
     cwd: '/Users/sitek/sandbox/remix-mdx-blog-demo',
   })
 

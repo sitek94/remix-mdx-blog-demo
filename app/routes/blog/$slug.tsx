@@ -7,7 +7,8 @@ import { getMDXComponent } from 'mdx-bundler/client'
 import { getPost } from './get-post.server'
 
 export const loader: LoaderFunction = async ({ params }) => {
-  return json({ slug: params.slug, ...(await getPost()) })
+  const slug = params.slug
+  return json({ slug, ...(await getPost(slug)) })
 }
 
 export default function BlogSlug() {
@@ -24,10 +25,8 @@ export default function BlogSlug() {
 function Post({ code, frontmatter }) {
   // it's generally a good idea to memoize this function call to
   // avoid re-creating the component every render.
-
-  console.log(code, frontmatter)
-
   const Component = React.useMemo(() => getMDXComponent(code), [code])
+
   return (
     <>
       <header>
