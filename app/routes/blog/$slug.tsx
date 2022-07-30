@@ -1,19 +1,23 @@
 import * as React from 'react'
-import type { LoaderFunction } from '@remix-run/node'
+import type { LoaderFunction, MetaFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
 import { getMDXComponent } from 'mdx-bundler/client'
 
 import { getBlogMdxPage } from '~/mdx.server'
+import type { MdxPage } from '~/types'
 
 export const loader: LoaderFunction = async ({ params }) => {
   const slug = params.slug
   const page = await getBlogMdxPage(slug)
 
-  return json({
-    slug,
-    ...page,
-  })
+  return json(page)
+}
+
+export const meta: MetaFunction = ({ data }: { data: MdxPage }) => {
+  return {
+    title: data.frontmatter.title,
+  }
 }
 
 export default function BlogSlug() {
