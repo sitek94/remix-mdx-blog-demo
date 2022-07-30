@@ -1,33 +1,28 @@
 import { json } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import { Link, useLoaderData } from '@remix-run/react'
 
-import { getBlogMdxListItemsPaths } from './mdx'
-
-type Post = {
-  slug: string
-  title: string
-  description: string
-}
-
-function postFromModule(mod): Post {
-  return {
-    slug: mod.filename.replace(/\.mdx?$/, ''),
-    ...mod.attributes.meta,
-  }
-}
+import { getBlogMdxListItems } from '../mdx.server'
+import type { MdxListItem } from '~/types'
 
 export async function loader() {
-  const paths = getBlogMdxListItemsPaths()
+  const blogListItems = await getBlogMdxListItems()
 
-  return json(paths)
+  return json(blogListItems)
 }
 
 export default function Index() {
-  const data = useLoaderData()
-  console.log(data)
+  const listItems = useLoaderData<MdxListItem[]>()
+
   return (
     <main>
       <h1>Blog</h1>
+      <ul>
+        {listItems.map(({ slug, frontmatter: { title } }) => (
+          <li key={slug}>
+            <Link to={`/blog/${slug}`}>{title}</Link>
+          </li>
+        ))}
+      </ul>
     </main>
   )
 }

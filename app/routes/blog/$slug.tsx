@@ -1,24 +1,30 @@
 import * as React from 'react'
 import type { LoaderFunction } from '@remix-run/node'
-
 import { json } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
 import { getMDXComponent } from 'mdx-bundler/client'
-import { getPost } from './get-post.server'
+
+import { getBlogMdxPage } from '~/mdx.server'
 
 export const loader: LoaderFunction = async ({ params }) => {
   const slug = params.slug
-  return json({ slug, ...(await getPost(slug)) })
+  const page = await getBlogMdxPage(slug)
+
+  return json({
+    slug,
+    ...page,
+  })
 }
 
 export default function BlogSlug() {
-  const { slug, code, frontmatter } = useLoaderData()
+  const { code, frontmatter } = useLoaderData()
   return (
-    <main>
-      <h1>Some Post: {slug}</h1>
+    <>
+      <nav>
+        <Link to="/">Go back</Link>
+      </nav>
       <Post code={code} frontmatter={frontmatter} />
-      <Link to="/">Go back</Link>
-    </main>
+    </>
   )
 }
 
@@ -31,7 +37,6 @@ function Post({ code, frontmatter }) {
     <>
       <header>
         <h1>{frontmatter.title}</h1>
-        <p>{frontmatter.description}</p>
       </header>
       <main>
         <Component />

@@ -1,10 +1,15 @@
 # Remix MDX Blog
 
+## Resources
+
 - [Remix Docs](https://remix.run/docs)
   - [MDX](https://remix.run/docs/en/v1/guides/mdx#mdx)
   - [Loading data](https://remix.run/docs/en/v1/tutorials/blog#loading-data)
 - [mdx-bundler](https://github.com/kentcdodds/mdx-bundler)
   - had to use `mdx-bundler` within `.server.ts` files to avoid errors
+- Kent C. Dodds
+  - [kentcdodds.com](https://github.com/kentcdodds/kentcdodds.com)
+  - [How I built a modern website in 2021](https://kentcdodds.com/blog/how-i-built-a-modern-website-in-2021)
 
 ## Development
 
