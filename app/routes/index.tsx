@@ -1,5 +1,7 @@
 import { json } from '@remix-run/node'
-import { Link, useLoaderData } from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
+
+import { getBlogMdxListItemsPaths } from './mdx'
 
 type Post = {
   slug: string
@@ -15,27 +17,17 @@ function postFromModule(mod): Post {
 }
 
 export async function loader() {
-  // Return metadata about each of the posts for display on the index page.
-  // Referencing the posts here instead of in the Index component down below
-  // lets us avoid bundling the actual posts themselves in the bundle for the
-  // index page.
-  return json([])
+  const paths = getBlogMdxListItemsPaths()
+
+  return json(paths)
 }
 
 export default function Index() {
-  const posts = useLoaderData<Post[]>()
-
+  const data = useLoaderData()
+  console.log(data)
   return (
     <main>
       <h1>Blog</h1>
-      <ul>
-        {posts.map(post => (
-          <li key={post.slug}>
-            <Link to={`posts/${post.slug}`}>{post.title}</Link>
-            {post.description ? <p>{post.description}</p> : null}
-          </li>
-        ))}
-      </ul>
     </main>
   )
 }
